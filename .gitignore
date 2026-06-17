@@ -1,0 +1,35 @@
+# MATLAB 生成文件
+*.asv
+*.m~
+*.fig
+*.mex*
+*.p
+
+# 仿真结果数据（体积大，不跟踪）
+results_old/
+results_entropy_pheromone/
+CompareResults/
+_test_run/
+
+# 视频文件
+*.mp4
+*.avi
+
+# MATLAB 自动保存
+*.autosave
+*.backup
+
+# 操作系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# 日志
+*.log
+
+# Python 脚本
+build_report.py
