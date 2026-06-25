@@ -4,4 +4,7 @@ function saveFigureCompat(figHandle, fileName)
     else
         saveas(figHandle, fileName);
     end
+    [p, n, ~] = fileparts(fileName);
+    figName = fullfile(p, [n '.fig']);
+    savefig(figHandle, figName);
 end

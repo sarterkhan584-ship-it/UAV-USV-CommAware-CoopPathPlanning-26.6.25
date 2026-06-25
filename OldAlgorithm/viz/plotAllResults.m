@@ -14,11 +14,13 @@ function plotAllResults(results, params, mapData, outDir)
     % 图01：最终覆盖航迹图（含通信状态标记）
     plotSearchMap(islandMask, results.coveredGlobal, xGrid, yGrid, results.uavTrail, results.usvTrail, params);
     movefileIfExists('search_tracks_full_map_v5.png', fullfile(outDir, 'figure_01_search_tracks.png'));
+    movefileIfExists('search_tracks_full_map_v5.fig', fullfile(outDir, 'figure_01_search_tracks.fig'));
 
     % 图02：覆盖率曲线（全图/海面/岛屿 + 重复率）
     plotCoverageCurve(results.coverageHist, results.seaCoverageHist, ...
         results.islandCoverageHist, results.repeatRateHist, params);
     movefileIfExists('coverage_curve_v5.png', fullfile(outDir, 'figure_02_coverage_curve.png'));
+    movefileIfExists('coverage_curve_v5.fig', fullfile(outDir, 'figure_02_coverage_curve.fig'));
 
     % 图03：通信指标综合仪表盘（6子图）
     plotCommunicationDashboard(results, params, outDir);
@@ -48,6 +50,7 @@ function plotAllResults(results, params, mapData, outDir)
     if isfield(results, 'entropyMap') && ~isempty(results.entropyMap)
         plotEntropyPheromoneMaps(results, islandMask, xGrid, yGrid, params);
         movefileIfExists('entropy_pheromone_maps.png', fullfile(outDir, 'figure_10_entropy_pheromone.png'));
+        movefileIfExists('entropy_pheromone_maps.fig', fullfile(outDir, 'figure_10_entropy_pheromone.fig'));
     end
 
     close all;
@@ -270,7 +273,7 @@ function plotCoverageSnapshots(results, mapData, params, outDir)
     xGrid = mapData.xGrid;
     yGrid = mapData.yGrid;
 
-    snapshotSteps = [200, 400, 600, 800, 1000, 1200];
+    snapshotSteps = [200, 400, 600];  % 对应 2000s, 4000s, 6000s
     totalSteps = size(results.uavTrail, 1) - 1;
     % 过滤超过实际运行步数的快照
     snapshotSteps(snapshotSteps > totalSteps) = [];
@@ -435,6 +438,9 @@ function saveFigureLocal(fig, fileName)
     else
         saveas(fig, fileName);
     end
+    [p, n, ~] = fileparts(fileName);
+    figName = fullfile(p, [n '.fig']);
+    savefig(fig, figName);
 end
 
 % ========================================================================
